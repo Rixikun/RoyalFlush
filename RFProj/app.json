@@ -24,7 +24,11 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.rixi.royalflush"
+    },
+    "android": {
+      "package": "com.rixi.royalflush"
     }
   }
 }
