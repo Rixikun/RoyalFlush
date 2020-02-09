@@ -28,7 +28,10 @@
       "bundleIdentifier": "com.rixi.royalflush"
     },
     "android": {
-      "package": "com.rixi.royalflush"
+      "package": "com.rixi.royalflush",
+      "config": {
+        "googleMaps": {"apiKey": "AIzaSyC2a-6iMs5coZHGBmeWh-R3Ztmcw50o2rI"}
+      }
     }
   }
 }

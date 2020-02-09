@@ -117,6 +117,7 @@ recordEvent = (coordinate) =>{
                 <View style={styles.markerCurr}/>
               </View>
             </MapView.Marker>
+            
             <MapView.Marker
               coordinate={this.state.initialPosition}
             >

@@ -3,6 +3,7 @@ import * as Font from 'expo-font'
 
 import MapScreen from './screens/mapScreen'
 import SpotInfo from './screens/spotInfo';
+import TestMap from './testMap'
 
 export default class App extends React.Component {
   constructor(props) {
@@ -21,8 +22,9 @@ export default class App extends React.Component {
   }
   render(){
     return(
+      <TestMap></TestMap>
       // <MapScreen></MapScreen>
-      <SpotInfo></SpotInfo>
+      // <SpotInfo></SpotInfo>
     )
   }
 }
