@@ -29,13 +29,12 @@ export default class App extends React.Component {
       currentPosition: {
         latitude: 0, 
         longitude: 0,
-        latitudeDelta: 0,
-        longitudeDelta: 0
       }
     }
   }
 
   watchID: ?number = null
+  // watchID = null
  
    componentDidMount(){
      Font.loadAsync({
@@ -53,8 +52,8 @@ export default class App extends React.Component {
         longitude: long,
         latitudeDelta: LATITUDE_DELTA,
         longitudeDelta: LONGITUDE_DELTA
-      }
-      this.setState({currentPosition: initialRegion})
+      } 
+      this.setState({currentPosition: {latitude: lat, longitude: long}})
       this.setState({initialPosition: initialRegion})
       this.setState({markerPosition: initialRegion})
     }, (error) => alert(JSON.stringify(error)),
@@ -162,8 +161,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   markerCurr: {
-    height: 20,
-    width: 20,
+    height: 15,
+    width: 15,
     borderWidth: 2,
     borderRadius: 20/2,
     borderColor: 'white',
