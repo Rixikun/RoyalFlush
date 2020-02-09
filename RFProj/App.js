@@ -25,6 +25,12 @@ export default class App extends React.Component {
       markerPosition: {
         latitude: 0,
         longitude: 0
+      },
+      currentPosition: {
+        latitude: 0, 
+        longitude: 0,
+        latitudeDelta: 0,
+        longitudeDelta: 0
       }
     }
   }
@@ -48,6 +54,7 @@ export default class App extends React.Component {
         latitudeDelta: LATITUDE_DELTA,
         longitudeDelta: LONGITUDE_DELTA
       }
+      this.setState({currentPosition: initialRegion})
       this.setState({initialPosition: initialRegion})
       this.setState({markerPosition: initialRegion})
     }, (error) => alert(JSON.stringify(error)),
@@ -72,8 +79,9 @@ export default class App extends React.Component {
   }
 
 recordEvent = (coordinate) =>{
+  console.log(coordinate)
   this.setState({
-    location: coordinate
+    initialPosition: coordinate
   })
 }
 
@@ -99,13 +107,20 @@ recordEvent = (coordinate) =>{
          region = {this.state.initialPosition}
          provider={MapView.PROVIDER_GOOGLE}
          customMapStyle={mapStyleColor}
-        //  onRegionChangeComplete={(coordinate)=>this.recordEvent(coordinate)}
+         onRegionChangeComplete={(coordinate)=>this.recordEvent(coordinate)}
           >
+            <MapView.Marker
+              coordinate={this.state.currentPosition}
+            >
+              <View style={styles.radiusCurr}>
+                <View style={styles.markerCurr}/>
+              </View>
+            </MapView.Marker>
             <MapView.Marker
               coordinate={this.state.initialPosition}
             >
-              <View style={styles.radius}>
-                <View style={styles.marker}/>
+              <View style={styles.radiusInit}>
+                <View style={styles.markerInit}/>
               </View>
             </MapView.Marker>
 
@@ -124,7 +139,18 @@ recordEvent = (coordinate) =>{
 }
 
 const styles = StyleSheet.create({
-  radius: {
+  radiusCurr: {
+    height: 40,
+    width: 40,
+    borderRadius: 40/2,
+    overflow: 'hidden',
+    backgroundColor: 'rgba(150,245,240,0.25)',
+    borderWidth: 1,
+    borderColor: 'rgba(0,122,255,0.25)',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  radiusInit: {
     height: 50,
     width: 50,
     borderRadius: 50/2,
@@ -135,13 +161,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
-  marker: {
+  markerCurr: {
+    height: 20,
+    width: 20,
+    borderWidth: 2,
+    borderRadius: 20/2,
+    borderColor: 'white',
+    backgroundColor: '#007AFF'
+  },
+  markerInit: {
     height: 20,
     width: 20,
     borderWidth: 3,
     borderRadius: 20/2,
     borderColor: 'white',
-    backgroundColor: '#007AFF'
+    backgroundColor: '#FF7B39'
   },
   container: {
     flex: 1,
