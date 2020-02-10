@@ -22,8 +22,8 @@ export default class App extends React.Component {
   }
   render(){
     return(
-      <TestMap></TestMap>
-      // <MapScreen></MapScreen>
+      // <TestMap></TestMap>
+      <MapScreen></MapScreen>
       // <SpotInfo></SpotInfo>
     )
   }

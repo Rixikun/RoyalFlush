@@ -3,6 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="a9027493-27e9-400b-b311-8a785f0a57e7" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/mapScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/mapScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/testMap.js" beforeDir="false" afterPath="$PROJECT_DIR$/testMap.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -13,7 +15,7 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="2093" />
     <option name="width" value="933" />
     <option name="height" value="991" />
