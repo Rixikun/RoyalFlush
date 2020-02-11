@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, Image } from 'react-native';
 import {Header, Left, Button, Icon, Body, Right, Title, Fab} from 'native-base'
 
 import styles from '../styling/styles'
@@ -20,6 +20,7 @@ const coords = Object.keys(spots).map(spot=>{
 export default class SpotInfo extends React.Component {
 
   render() {
+
       const test = Object.keys(spots).map(spot => {
           return (
             <Text key={spot}>    
@@ -44,6 +45,7 @@ export default class SpotInfo extends React.Component {
       })
     return (
       <View style={styles.container}>
+        {starIcon}
           <Text>
               SpotInfo.js
                 {'\n'}

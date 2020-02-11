@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import MapView from 'react-native-maps';
-import { View, Dimensions } from 'react-native';
+import { View, Dimensions, Image } from 'react-native';
 import {Header, Left, Button, Icon, Body, Right, Title, Fab} from 'native-base'
 
 import styles from '../styling/styles'
@@ -15,13 +15,6 @@ const ASPECT_RATIO = width / height
 const LATITUDE_DELTA = 0.0922
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO
 
-//https://www.yelp.com/developers/documentation/v3/business_search
-//GET https://api.yelp.com/v3/businesses/search?location=${req.body.location}&latitude=${req.body.latitude}&longitude=${req.body.longitude}&radius=800&limit=50
-const coords = Object.keys(spots).map(spot=>{
-  return spot.split(', ').map(coord => {
-    return Number(coord)
-  })
-})
 
 export default class MapScreen extends React.Component {
   constructor(props) {
@@ -41,35 +34,33 @@ export default class MapScreen extends React.Component {
         latitude: 0, 
         longitude: 0,
       }, 
-      // isLoading: true,
       markers: [],
     }
   }
 
-  watchID: ?number = null
-  // watchID = null
-
+  watchID = null
+ 
   async fetchMarkerData(){
     try{
-      const apiURL = 'https://api.yelp.com/v3/businesses/search?latitude=40.753705&longitude=-73.901621'
+      console.log('fetching...')
+      const apiURLTest = 'https://api.yelp.com/v3/businesses/search?latitude=40.753705&longitude=-73.901621&limit=5'
+      const apiURL = `https://api.yelp.com/v3/businesses/search?latitude=${this.state.initialPosition.latitude}&longitude=${this.state.initialPosition.longitude}&radius=${500}&limit=20`
       const res = await fetch(apiURL, {
         headers: {
           'Authorization': `Bearer ${apiKeyYelp}`
         }
       })
       const data = await res.json()
-      // console.log(data)
       this.setState({
-          markers: data.businesses
+        markers: data.businesses
       })
-    
+      console.log('fetched!!!')
     } catch (err) {
       console.log(err)
     }
   }
 
    componentDidMount(){
-    this.fetchMarkerData();
 
     navigator.geolocation.getCurrentPosition((position)=>{
       let lat = parseFloat(position.coords.latitude)
@@ -83,9 +74,10 @@ export default class MapScreen extends React.Component {
       this.setState({currentPosition: {latitude: lat, longitude: long}})
       this.setState({initialPosition: initialRegion})
       this.setState({markerPosition: initialRegion})
+
     }, (error) => alert(JSON.stringify(error)),
-    {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000})
-    
+    {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}) 
+
     this.watchID = navigator.geolocation.watchPosition((position) => {
         let lat = parseFloat(position.coords.latitude)
         let long = parseFloat(position.coords.longitude)
@@ -99,18 +91,25 @@ export default class MapScreen extends React.Component {
         this.setState({markerPosition: lastRegion})
     }, (error) => alert(JSON.stringify(error)),
     {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000})
+
+    this.fetchMarkerData()
   }    
- 
  
   componentWillUnmount(){
     navigator.geolocation.clearWatch(this.watchID)
   }
 
+  // componentDidUpdate(prevProps){
+  //   if(this.props.initialPosition && this.props.initialPosition.latitude !== prevProps.initialPosition.latitude && this.props.initialPosition.longitude !== prevProps.initialPosition.longitude){
+  //     this.fetchMarkerData()
+  //  }
+  // }
+
   recordEvent = (coordinate) =>{
-    // console.log(coordinate)
     this.setState({
       initialPosition: coordinate
     })
+    this.fetchMarkerData() 
   }
 
   render() {
@@ -118,17 +117,13 @@ export default class MapScreen extends React.Component {
       <View style={{flex: 1}}>
        <Header>
           <Left>
-
-          </Left>
-          <Body>
-            {/* <Title>Find that restroom!!</Title> */}
-          </Body>
-          <Right>
-            <Button transparent>
+          <Button transparent>
               <Icon name="power"/>
             </Button>
-          </Right>
-
+          </Left>
+          <Body>
+             {/* <Title>Searching...</Title>  */}
+          </Body>
         </Header> 
         <MapView
          style={{flex: 1}} 
@@ -154,22 +149,22 @@ export default class MapScreen extends React.Component {
             </MapView.Marker>
 
              {this.state.markers.map((marker, index) => {
-                const coords = {
-                    latitude: marker.coordinates.latitude,
-                    longitude: marker.coordinates.longitude,
-                };
-              
-                const metadata = `Rating: ${marker.rating} Address: ${marker.location['display_address'][0]} ${marker.location['display_address'][1]}`;
-            
-                return (
-                    <MapView.Marker
-                        key={index}
-                        coordinate={coords}
-                        title={marker.name}
-                        description={metadata}
-                    />
-                );
-            })} 
+          const coords = {
+              latitude: marker.coordinates.latitude,
+              longitude: marker.coordinates.longitude,
+          };
+        
+          const metadata = `Rating: ${marker.rating} Address: ${marker.location['display_address'][0]} ${marker.location['display_address'][1]}`;
+      
+          return (
+              <MapView.Marker
+                  key={index}
+                  coordinate={coords}
+                  title={marker.name}
+                  description={metadata}
+              />
+          );
+      })} 
 
           </MapView>
           {/* <Fab direction="left" position="bottomRight"

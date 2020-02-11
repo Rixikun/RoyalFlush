@@ -3,6 +3,12 @@ import { StyleSheet, Dimensions } from 'react-native';
 
 
 const styles = StyleSheet.create({
+    markerSize: {
+      flex: 1,
+      width: 30,
+      height: 30,
+      resizeMode: 'contain'
+    },
     radiusCurr: {
       height: 40,
       width: 40,
