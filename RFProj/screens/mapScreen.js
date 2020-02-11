@@ -60,7 +60,7 @@ export default class MapScreen extends React.Component {
       const data = await res.json()
       // console.log(data)
       this.setState({
-          markers: data
+          markers: data.businesses
       })
     
     } catch (err) {
@@ -153,23 +153,23 @@ export default class MapScreen extends React.Component {
               </View>
             </MapView.Marker>
 
-            {/* {this.state.markers.map((marker, index) => {
+             {this.state.markers.map((marker, index) => {
                 const coords = {
-                    latitude: marker.latitude,
-                    longitude: marker.longitude,
+                    latitude: marker.coordinates.latitude,
+                    longitude: marker.coordinates.longitude,
                 };
-            
-                // const metadata = `Status: ${marker.statusValue}`;
+              
+                const metadata = `Rating: ${marker.rating} Address: ${marker.location['display_address'][0]} ${marker.location['display_address'][1]}`;
             
                 return (
                     <MapView.Marker
                         key={index}
                         coordinate={coords}
-                        title={marker.stationName}
-                        // description={metadata}
+                        title={marker.name}
+                        description={metadata}
                     />
                 );
-            })} */}
+            })} 
 
           </MapView>
           {/* <Fab direction="left" position="bottomRight"
